@@ -44,15 +44,22 @@ class Solution(object):
         :rtype: int
         """
 
-        D = []
-        for j in range(len(A[0])):
-            for i in range(1, len(A)):
-                # print "%s, %s" % (A[i-1][j], A[i][j])
-                if A[i][j] < A[i-1][j]:
-                    D.append(j)
-                    break
+        # D = []
+        # for col in range(len(A[0])):
+        #     for row in range(1, len(A)):
+        #         # print "%s, %s" % (A[row-1][col], A[row][col])
+        #         if A[row][col] < A[row-1][col]:
+        #             D.append(col)
+        #             break
+        #
+        # return len(D)
 
-        return len(D)
+        ans = 0
+        for col in zip(*A):
+            if any(col[i] > col[i+1] for i in xrange(len(col)-1)):
+                ans += 1
+
+        return ans
 
 if __name__ == '__main__':
     A = ["zyx","wvu","tsr"]
