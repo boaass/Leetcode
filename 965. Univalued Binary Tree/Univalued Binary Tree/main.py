@@ -39,42 +39,34 @@ class Solution(object):
         :type root: TreeNode
         :rtype: bool
         """
-        if root is not None:
-            self.isUnivalTree(root.left)
-            self.isUnivalTree(root.right)
-            self.values.append(root.val)
+        # if root is not None:
+        #     self.isUnivalTree(root.left)
+        #     self.isUnivalTree(root.right)
+        #     self.values.append(root.val)
+        #
+        # return len(set(self.values)) == 1
 
-        return len(set(self.values)) == 1
-
-        # return self.traverseTree(root.left, root.right, root.val)
-
-    def traverseTree(self, left, right, value):
-        """
-        :type left: TreeNode
-        :type right: TreeNode
-        :type value: int
-        :rtype: bool
-        """
-        if None is left and right is None:
+        if root is None:
             return True
 
-        elif left is not None and right is None:
-            if left.val != value:
+        if root.left is None and root.right is None:
+            return True
+        elif root.left is not None and root.right is None:
+            if root.left.val != root.val:
                 return False
             else:
-                return self.traverseTree(left.left, left.right, left.val)
-        elif right is not None and left is None:
-            if right.val != value:
+                return self.isUnivalTree(root.left)
+        elif root.right is not None and root.left is None:
+            if root.right.val != root.val:
                 return False
             else:
-                return self.traverseTree(right.left, right.right, right.val)
+                return self.isUnivalTree(root.right)
         else:
-            if right.val != value or left.val != value:
+            if root.right.val != root.val or root.left.val != root.val:
                 return False
             else:
-                return self.traverseTree(right.left, right.right, right.val) and\
-                       self.traverseTree(left.left, left.right, left.val)
-
+                return self.isUnivalTree(root.right) and\
+                       self.isUnivalTree(root.left)
 
 if __name__ == '__main__':
     node1 = TreeNode(1)
