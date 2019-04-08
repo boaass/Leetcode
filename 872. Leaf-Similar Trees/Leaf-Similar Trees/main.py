@@ -21,6 +21,7 @@ class TreeNode(object):
         self.left = None
         self.right = None
 
+
 class Solution(object):
     def leafSimilar(self, root1, root2):
         """
@@ -32,6 +33,8 @@ class Solution(object):
         def traverseNode(node, queue):
             if node is None:
                 return None
+
+            print node.val
 
             l_node = traverseNode(node.left, queue)
             r_node = traverseNode(node.right, queue)
@@ -55,6 +58,43 @@ class Solution(object):
             return False
 
 
+def traversalBinaryTree(root):
+    """
+    :type root: TreeNode
+    """
+    if root is None:
+        return
+
+    print root.val
+    traversalBinaryTree(root.left)
+    traversalBinaryTree(root.right)
+
+
+def breadthTraversalCreateBinaryTree(A):
+    """
+    :type A: List<Int>
+    :rtype: TreeNode
+    """
+    index = 0
+    root = TreeNode(A[index])
+    queue = [root]
+    while len(queue) > 0 and index < len(A)-2:
+        lastNode = queue.pop(0)
+        index += 1
+        if A[index] is not None:
+            lastNode.left = TreeNode(A[index])
+            queue.append(lastNode.left)
+        index += 1
+        if A[index] is not None:
+            lastNode.right = TreeNode(A[index])
+            queue.append(lastNode.right)
+    return root
 
 
 if __name__ == '__main__':
+    node1 = breadthTraversalCreateBinaryTree([3,5,1,6,2,9,8,None,None,7,4])
+    node2 = breadthTraversalCreateBinaryTree([3,5,1,6,7,4,2,None,None,None,None,None,None,9,8])
+
+    solution = Solution()
+    isLeafSimilar = solution.leafSimilar(node1, node2)
+    print 'isLeafSimilar --- %d' % isLeafSimilar
