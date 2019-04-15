@@ -21,15 +21,33 @@ class MyHashMap(object):
         """
         Initialize your data structure here.
         """
-        self.size = 1000000
-        self.hashMap = [-1] * self.size
+        self.initCapacity = 4 * 1024    # 初始容量
+        self.loadFactor = 0.75  # 负载因子
+        self.curCapacity = self.initCapacity    # 当前容量
+        self.elementCount = 0   # 当前元素数量
+        self.hashMap = [[] for _ in range(self.curCapacity)]
 
     def custom_hash(self, key):
         """
         :type key: int
         :return: int
         """
-        return key % self.size
+        return key % self.curCapacity
+
+    def reHash(self):
+        if self.elementCount / self.curCapacity >= self.loadFactor:
+            self.curCapacity *= 2
+        else:
+            if self.curCapacity is not self.initCapacity:
+                self.curCapacity //= 2
+            else:
+                return
+
+        t_hashMap = [t for t in self.hashMap]
+        self.hashMap = [[] for _ in range(self.curCapacity)]
+        for t in t_hashMap:
+            for k, v in t:
+                self.put(k, v)
 
     def put(self, key, value):
         """
@@ -38,7 +56,14 @@ class MyHashMap(object):
         :type value: int
         :rtype: None
         """
-        self.hashMap[self.custom_hash(key)] = value
+
+        self.remove(key)
+
+        self.elementCount += 1
+        t = self.hashMap[self.custom_hash(key)]
+        t.append((key, value))
+
+        self.reHash()
 
     def get(self, key):
         """
@@ -46,7 +71,12 @@ class MyHashMap(object):
         :type key: int
         :rtype: int
         """
-        return self.hashMap[self.custom_hash(key)]
+        t = self.hashMap[self.custom_hash(key)]
+        for k, v in t:
+            if k == key:
+                return v
+
+        return -1
 
     def remove(self, key):
         """
@@ -54,7 +84,17 @@ class MyHashMap(object):
         :type key: int
         :rtype: None
         """
-        self.hashMap[self.custom_hash(key)] = -1
+        t = self.hashMap[self.custom_hash(key)]
+        old_t = None
+        for k, v in t:
+            if k == key:
+                old_t = (key, v)
+                break
+        if old_t:
+            self.elementCount -= 1
+            t.remove(old_t)
+
+        self.reHash()
 
 
 if __name__ == '__main__':
