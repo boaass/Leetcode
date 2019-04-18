@@ -38,7 +38,7 @@ class MyHashMap(object):
         if self.elementCount / self.curCapacity >= self.loadFactor:
             self.curCapacity *= 2
         else:
-            if self.curCapacity is not self.initCapacity:
+            if self.elementCount / self.curCapacity <= 1 - self.loadFactor and self.curCapacity != self.initCapacity:
                 self.curCapacity //= 2
             else:
                 return
