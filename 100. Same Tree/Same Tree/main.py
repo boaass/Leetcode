@@ -48,44 +48,78 @@ class Solution(object):
         :type q: TreeNode
         :rtype: bool
         """
-        def traverse_and_save(root):
+        # def traverse_and_save(root):
+        #     """
+        #     :type root: TreeNode
+        #     :return: List[int]
+        #     """
+        #     if not root:
+        #         return None
+        #
+        #     r = [root.val]
+        #     temp_queue = [root]
+        #     while temp_queue:
+        #         queue = temp_queue
+        #         while queue:
+        #             cur_node = queue.pop(0)
+        #             if cur_node.left:
+        #                 temp_queue.append(cur_node.left)
+        #                 r.append(cur_node.left.val)
+        #             else:
+        #                 r.append(0)
+        #             if cur_node.right:
+        #                 temp_queue.append(cur_node.right)
+        #                 r.append(cur_node.right.val)
+        #             else:
+        #                 r.append(0)
+        #
+        #     for i in range(len(r)-1, -1, -1):
+        #         if r[i] == 0:
+        #             r.pop(-1)
+        #         else:
+        #             break
+        #
+        #     return r
+        #
+        #
+        # A = traverse_and_save(p)
+        # B = traverse_and_save(q)
+        #
+        # return A == B
+
+        # if not p and not q:
+        #     return True
+        # if not p or not q:
+        #     return False
+        # if p.val != q.val:
+        #     return False
+        #
+        # return self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
+
+        def check(p, q):
             """
-            :type root: TreeNode 
-            :return: List[int]
+            :param p: TreeNode 
+            :param q: TreeNode
+            :return: bool
             """
-            if not root:
-                return None
+            if not p and not q:
+                return True
+            if not p or not q:
+                return False
+            if p.val != q.val:
+                return False
+            return True
 
-            r = [root.val]
-            temp_queue = [root]
-            while temp_queue:
-                queue = temp_queue
-                while queue:
-                    cur_node = queue.pop(0)
-                    if cur_node.left:
-                        temp_queue.append(cur_node.left)
-                        r.append(cur_node.left.val)
-                    else:
-                        r.append(0)
-                    if cur_node.right:
-                        temp_queue.append(cur_node.right)
-                        r.append(cur_node.right.val)
-                    else:
-                        r.append(0)
+        queue = [(p, q)]
+        while queue:
+            p, q = queue.pop(0)
+            if not check(p, q):
+                return False
+            if p:
+                queue.append((p.left, q.left))
+                queue.append((p.right, q.right))
 
-            for i in range(len(r)-1, -1, -1):
-                if r[i] == 0:
-                    r.pop(-1)
-                else:
-                    break
-
-            return r
-
-
-        A = traverse_and_save(p)
-        B = traverse_and_save(q)
-
-        return A == B
+        return True
 
 
 def createBTree(A):
