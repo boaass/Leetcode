@@ -50,16 +50,20 @@ class Solution(object):
         #     r += nums[i] - min_v
         # return r
 
-        r = 0
-        min_v = nums[0]
-        for i in range(1, len(nums)):
-            if nums[i] >= min_v:
-                r += nums[i]-min_v
-            else:
-                r += i*(min_v-nums[i])
-                min_v = nums[i]
+        # r = 0
+        # min_v = nums[0]
+        # for i in range(1, len(nums)):
+        #     if nums[i] >= min_v:
+        #         r += nums[i]-min_v
+        #     else:
+        #         r += i*(min_v-nums[i])
+        #         min_v = nums[i]
+        #
+        # return r
 
-        return r
+        return sum(nums) - min(nums) * len(nums)
+
+
 
 
 
