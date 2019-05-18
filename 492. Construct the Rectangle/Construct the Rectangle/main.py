@@ -22,17 +22,16 @@ class Solution(object):
         :type area: int
         :rtype: List[int]
         """
-        width = height = area ** 0.5
+        width = int(area ** 0.5)
 
-        while width * height != area and width > 0 and height > 0:
-            width = round(width-0.5)
-            height = round(height+0.5)
+        while area % width != 0:
+            width = int(width-1)
 
-        return [width, height]
+        return [int(area/width), int(width)]
 
 
 if __name__ == '__main__':
-    area = 6
+    area = 5
     solution = Solution()
     r = solution.constructRectangle(area)
     print r
