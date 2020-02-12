@@ -46,13 +46,34 @@ class Solution(object):
             temp.next = slow.next
             slow.next = temp
 
+        # newHead = None
+        # while last:
+        #     node = last
+        #     last = last.next
+        #
+        #     node.next = newHead
+        #     newHead = node
+        #
+        # slow.next = newHead
+
         while slow.next:
             slow = slow.next
+            print pre.val, slow.val
             if pre.val != slow.val:
                 return False
             pre = pre.next
 
         return True
+
+    def reversedLinkedList(self, head):
+        newHead = None
+        while head:
+            node = head
+            head = head.next
+            node.next = newHead
+            newHead = node
+
+        return newHead
 
     def createLinkList(self, vals, pos):
         before_node = None
@@ -67,6 +88,11 @@ class Solution(object):
             if pos != -1 and pos == i:
                 last_node.next = node
         return before_node
+
+    def traverseLinkedList(self, head):
+        while head:
+            print head.val
+            head = head.next
 
 if __name__ == '__main__':
 
