@@ -25,33 +25,33 @@ class Solution(object):
         :type word: str
         :rtype: bool
         """
-        def dfs(r, c, word, last_direction=-1):
+        def dfs(r, c, word):
             if len(word) == 0:
                 return True
 
             # 上
-            if last_direction != 1 and r - 1 >= 0 and board[r-1][c] == word[0]:
+            if r - 1 >= 0 and board[r-1][c] == word[0]:
                 tmp = board[r][c]
                 board[r][c] = '#'
                 if dfs(r-1, c, word[1:], 0):
                     return True
                 board[r][c] = tmp
             # 下
-            if last_direction != 0 and r + 1 <= row - 1 and board[r+1][c] == word[0]:
+            if r + 1 <= row - 1 and board[r+1][c] == word[0]:
                 tmp = board[r][c]
                 board[r][c] = '#'
                 if dfs(r+1, c, word[1:], 1):
                     return True
                 board[r][c] = tmp
             # 左
-            if last_direction != 3 and c - 1 >= 0 and board[r][c-1] == word[0]:
+            if c - 1 >= 0 and board[r][c-1] == word[0]:
                 tmp = board[r][c]
                 board[r][c] = '#'
                 if dfs(r, c-1, word[1:], 2):
                     return True
                 board[r][c] = tmp
             # 右
-            if last_direction != 2 and c + 1 <= col - 1 and board[r][c+1] == word[0]:
+            if c + 1 <= col - 1 and board[r][c+1] == word[0]:
                 tmp = board[r][c]
                 board[r][c] = '#'
                 if dfs(r, c+1, word[1:], 3):
